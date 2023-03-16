@@ -12,6 +12,7 @@ import PageWrapper from "../components/wrappers/PageWrapper";
 import PageDataWrapper from "../components/wrappers/PageDataWrapper";
 import StockArticleData from "../components/stock/StockArticleData";
 import StockRedditData from "../components/stock/StockRedditData";
+import StockCorrelation from "../components/stock/StockCorrelation";
 
 export default function Stock() {
 
@@ -42,6 +43,14 @@ export default function Stock() {
                             : <></>
                     }
                 </BaseInfoWrapper>
+
+                <PageDataWrapper border={true}>
+                    {
+                        data
+                            ? <StockCorrelation data={data} />
+                            : <></>
+                    }
+                </PageDataWrapper>
                 
                 <PageDataWrapper border={true}>
                         {
@@ -51,7 +60,7 @@ export default function Stock() {
                         }
                 </PageDataWrapper>
 
-                <PageDataWrapper border={true}>
+                <PageDataWrapper>
                         {
                             data    
                                 ? <StockRedditData data={data} ticker={stock.symbol} />

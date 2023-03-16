@@ -25,15 +25,17 @@ export default function StockArticleData({ data, ticker }) {
                     Number of mentions in articles
                 </h1>
             </div>
-            <div className="grid grid-cols-4 gap-y-8">
+            <div className="grid grid-cols-3 gap-y-16 gap-x-12">
                 {
                     data.providers.map((provider, index) => {
-                        return <div className="max-w-md space-y-8" key={index}>
-                                    <PieChart 
-                                        data={[provider.stock_count, provider.total_count - provider.stock_count]} 
-                                        labels={labels} 
-                                        colors={colors}
-                                    />
+                        return <div className="max-w-xs space-y-8" key={index}>
+                                    <div>
+                                        <PieChart 
+                                            data={[provider.stock_count, provider.total_count - provider.stock_count]} 
+                                            labels={labels} 
+                                            colors={colors}
+                                        />
+                                    </div>
                                     <div className="text-center">
                                         <h1 className="uppercase font-medium pb-2">
                                             { provider.provider }
