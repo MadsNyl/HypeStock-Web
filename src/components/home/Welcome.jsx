@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 
-export default function Welcome() {
+export default function Welcome({ count }) {
     return (
         <div className="flex justify-center mt-24 pb-32">
             <div className="max-w-xs md:max-w-xl lg:max-w-5xl text-center">
@@ -11,7 +11,7 @@ export default function Welcome() {
                 </h1>
                 <div className="flex justify-center pb-12">
                     <p className="text-sm md:text-md lg:text-lg md:max-w-lg lg:max-w-xl text-center">
-                        Get all the predictions of the community of Reddit and Twitter, formated into organized and well-informative data 
+                        Get all the predictions of social media for <span className="font-medium">{ count ? `${count} stocks`: "over 8000 stocks" }</span>, formated into organized and well-informative data 
                     </p>
                 </div>
                 <div className="flex justify-center items-center space-x-6 lg:space-x-12 font-medium">
@@ -25,7 +25,7 @@ export default function Welcome() {
                     </NavLink>
                     <NavLink
                         to={"/stock"} 
-                        className="w-28 lg:w-36 py-3 text-sm lg:text-lg cursor-pointer rounded-lg border border-emerald-500 bg-emerald-500 text-white transition duration-150 ease-in-out hover:opacity-75">
+                        className="w-28 lg:w-36 py-3 text-sm lg:text-lg cursor-pointer rounded-lg border border-indigo-500 bg-indigo-500 text-white transition duration-150 ease-in-out hover:opacity-75">
                         <p>
                             Explore
                         </p>
