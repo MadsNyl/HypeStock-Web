@@ -8,6 +8,7 @@ import Stats from "./pages/Stats";
 import Stock from "./pages/Stock";
 import Reddit from "./pages/Reddit";
 import Search from "./pages/Search";
+import Trending from "./pages/Trending";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
             <Route path="/stats" element={<Stats />} />
             <Route path="/stock" element={<Search />} />
             <Route path="/stock/:symbol" element={<Stock />} />
+            <Route path="/trending" element={<Trending />} />
         </Routes>
       </Nav>
     </BrowserRouter>

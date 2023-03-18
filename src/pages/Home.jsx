@@ -10,18 +10,18 @@ export default function Home() {
 
     const [loading, setLoading] = useState();
     const [data, setData] = useState();
-    const [limit, setLimit] = useState(5);
+    const [limit, setLimit] = useState(10);
+    const [latest, setLatest] = useState();
 
     useEffect(() => {
-        getHomeBaseData(setLoading, setData, limit);
+        getHomeBaseData(setLoading, setData, limit, setLatest);
     }, []);
 
     return(
         <>
             <Welcome count={data?.stock_count} />
             <Info />
-            <Latest articles={data?.articles} comments={data?.reddit_comments} />
-            {/* <Results /> */}
+            <Latest data={latest} />
         </>
     );
 }
