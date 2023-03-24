@@ -73,13 +73,13 @@ export default function Nav({ children }) {
         { name: "tickers", path: "", isActive: false, collapse: true, children: [
             { name: "search", path: "/stock", collapse: false, description: "Search for a ticker or company", img: <SearchIcon/> },
             { name: "trending", path: "/trending", collapse: false, description: "Get a look at the trending tickers", img: <Trending /> },
-            { name: "exchanges", path: "/exchanges", collapse: false, description: "View the top exchanges of the US", img: <Exchange /> },
+            // { name: "exchanges", path: "/exchanges", collapse: false, description: "View the top exchanges of the US", img: <Exchange /> },
         ] },
         { name: "browse", path: "", isActive: false, collapse: true, children: [
             { name: "articles", path: "/articles", collapse: false, description: "See what the newspapers say", img: <Article /> },
             { name: "reddit", path: "/reddit", collapse: false, description: "See what the communities of Reddit say", img: <Reddit /> }
         ] },
-        { name: "stats", path: "/stats", isActive: false, collapse: false },
+        // { name: "stats", path: "/stats", isActive: false, collapse: false },
     ]
 
     return (
