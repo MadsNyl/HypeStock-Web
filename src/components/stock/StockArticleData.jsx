@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import PieChart from "../charts/PieChart";
+import DoughnutChart from "../charts/DoughnutChart";
 
 export default function StockArticleData({ data, ticker }) {
 
@@ -30,7 +30,7 @@ export default function StockArticleData({ data, ticker }) {
                     data.providers.map((provider, index) => {
                         return <div className="max-w-xs space-y-8" key={index}>
                                     <div>
-                                        <PieChart 
+                                        <DoughnutChart 
                                             data={[provider.stock_count, provider.total_count - provider.stock_count]} 
                                             labels={labels} 
                                             colors={colors}

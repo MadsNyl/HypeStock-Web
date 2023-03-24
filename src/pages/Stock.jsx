@@ -13,6 +13,7 @@ import PageDataWrapper from "../components/wrappers/PageDataWrapper";
 import StockArticleData from "../components/stock/StockArticleData";
 import StockRedditData from "../components/stock/StockRedditData";
 import StockCorrelation from "../components/stock/StockCorrelation";
+import StockStatus from "../components/stock/StockStatus";
 
 export default function Stock() {
 
@@ -30,6 +31,7 @@ export default function Stock() {
             setData, 
             setLoading
         )
+        console.log(data)
     }, []);
 
 
@@ -43,6 +45,14 @@ export default function Stock() {
                             : <></>
                     }
                 </BaseInfoWrapper>
+
+                <PageDataWrapper border={true}>
+                    {
+                        data
+                            ? <StockStatus data={data} days={days} />
+                            : <></>
+                    }
+                </PageDataWrapper>
 
                 <PageDataWrapper border={true}>
                     {

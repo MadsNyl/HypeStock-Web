@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import PieChart from "../charts/PieChart";
+import DoughnutChart from "../charts/DoughnutChart";
 
 export default function StockArticleData({ data, ticker }) {
 
@@ -30,7 +30,7 @@ export default function StockArticleData({ data, ticker }) {
                     data.subreddits.map((subreddit, index) => {
                         return <div className="max-w-xs space-y-8" key={index}>
                                     <div>
-                                        <PieChart 
+                                        <DoughnutChart 
                                             data={[subreddit.stock_count, subreddit.total_count - subreddit.stock_count]} 
                                             labels={labels} 
                                             colors={colors}

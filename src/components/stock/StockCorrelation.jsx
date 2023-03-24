@@ -13,17 +13,20 @@ export default function StockCorrelation({ data }) {
                 <PearsonCorrelationInfo 
                     x={data.tracking_info.trackings.map(tracking => { return tracking.last_price; }).reverse()}
                     y={data.tracking_info.reddit.map(reddit => { return reddit.count })}
-                    text="Reddit mentions and price"
+                    text="The correleation between the frequence of mentions and price."
+                    tag={"Reddit"}
                 />
                 <PearsonCorrelationInfo 
                     x={data.tracking_info.trackings.map(tracking => { return tracking.last_price; }).reverse()}
                     y={data.tracking_info.reddit_likes.map(reddit => { return reddit.likes })}
-                    text="Reddit upvotes and price"
+                    text="The correleation between upvotes from redditors and price."
+                    tag={"Reddit"}
                 />
                 <PearsonCorrelationInfo 
                     x={data.tracking_info.trackings.map(tracking => { return tracking.last_price; }).reverse()}
                     y={data.tracking_info.article.map(article => { return article.count })}
-                    text="Reddit upvotes and price"
+                    text="The correleation between the frequence of mentions and price."
+                    tag={"Article"}
                 />
             </div> 
         </div>

@@ -133,7 +133,7 @@ export default function Latest({ data }) {
             <h1 className="pb-4 text-gray-400 uppercase text-xl font-bold">
                 latest collected data from social media
             </h1>
-            <div className="bg-gray-50 border border-gray-200 rounded-lg py-6 px-8">
+            <div className="bg-white  py-6 px-8">
                 <div className="grid grid-cols-5 gap-6">
                     { 
                         data?.map((item, index) => {

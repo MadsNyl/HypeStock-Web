@@ -85,8 +85,8 @@ export default function TrendingData({ data, header }) {
                     : 
                     <div className="py-8 flex items-center justify-center space-x-16 transition ease-in-out duration-150">
                         <Data data={data.reddit_likes} header={"reddit likes"} icon={<LikeIcon />} color={"emerald"} />
-                        <Data data={data.reddit_mentions} header={"reddit mentions"} icon={<ChatIcon color={"red"} />} color={"red"} />
-                        <Data data={data.article_mentions} header={"article mentions"} icon={<ChatIcon color={"sky"} />} color={"sky"} />
+                        <Data data={data.reddit_mentions} header={"reddit mentions"} icon={<ChatIcon color={"emerald"} />} color={"emerald"} />
+                        <Data data={data.article_mentions} header={"article mentions"} icon={<ChatIcon color={"emerald"} />} color={"emerald"} />
                     </div>
             }
         </PageDataWrapper>
