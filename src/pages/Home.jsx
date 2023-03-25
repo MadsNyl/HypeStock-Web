@@ -10,7 +10,7 @@ export default function Home() {
 
     const [loading, setLoading] = useState();
     const [data, setData] = useState();
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(2);
     const [latest, setLatest] = useState();
 
     useEffect(() => {

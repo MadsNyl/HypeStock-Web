@@ -25,7 +25,7 @@ export default function Welcome({ count }) {
                     </NavLink>
                     <NavLink
                         to={"/stock"} 
-                        className="w-28 lg:w-36 py-3 text-sm lg:text-lg cursor-pointer rounded-lg border border-indigo-500 bg-indigo-500 text-white transition duration-150 ease-in-out hover:opacity-75">
+                        className="w-28 lg:w-36 py-3 text-sm lg:text-lg cursor-pointer rounded-lg border border-fuchsia-500 bg-fuchsia-500 text-white transition duration-150 ease-in-out hover:opacity-75">
                         <p>
                             Explore
                         </p>

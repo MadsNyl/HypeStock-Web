@@ -53,7 +53,7 @@ const Wrapper = ({ children, type, tickers, date, color, provider, url }) => {
                     </div>
             }
 
-            <div className="flex justify-between items-center pb-5">
+            <div className="flex justify-between items-center pb-2">
                 <div className={`px-3 py-1 rounded-xl bg-${color}-50 border border-${color}-200`}>
                     <h1 className={`capitalize text-sm text-${color}-500`}>
                         { type }
@@ -68,7 +68,9 @@ const Wrapper = ({ children, type, tickers, date, color, provider, url }) => {
                 </button>
             </div>
 
-            { children }
+            <div className="py-6">
+                { children }
+            </div>
 
             <div className="pb-4">
                 <div className={`flex justify-center py-1 px-4 rounded-md bg-${color}-50 border border-${color}-200`}>
@@ -78,20 +80,20 @@ const Wrapper = ({ children, type, tickers, date, color, provider, url }) => {
                 </div>
             </div>
 
-            <div className="flex justify-between items-center border-t border-gray-200 pt-2">
+            <div className="flex justify-between items-center border-t border-gray-200 pt-6 pb-4">
                 <div className="flex items-center space-x-1">
-                    <div className="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100">
+                    <div className="flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100">
                         <div className="w-3 h-3 rounded-full bg-emerald-200" />
                     </div>
-                    <p className="text-xs text-gray-500 font-medium">
+                    <p className="text-sm text-gray-500 font-medium">
                         { tickers } tickers
                     </p>
                 </div>
                 <div className="flex items-center space-x-1 text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
                     </svg>
-                    <p className="text-xs">
+                    <p className="text-sm">
                         { FormatDate(date) }
                     </p>
                 </div>
@@ -104,11 +106,11 @@ const Article = ({ article }) => {
     return (
         <Wrapper type={"article"} tickers={article.related_stocks.length} date={article.created_date} color={"sky"} provider={article.provider} url={article.url}>
             <div className="pb-4">
-                <h1 className="font-medium pb-2">
+                <h1 className="font-medium pb-4">
                     { FormatText(article.title, 50) }
                 </h1>
-                <p className="text-sm text-gray-400">
-                    { FormatText(article.body, 60) }
+                <p className=" text-gray-400">
+                    { FormatText(article.body, 200) }
                 </p>
             </div>
         </Wrapper>
@@ -120,7 +122,7 @@ const Comment = ({ comment }) => {
         <Wrapper type={"reddit"} tickers={1} date={comment.created_date} color={"yellow"} provider={comment.subreddit} url={"https://reddit.com" + comment.permalink} >
             <div className="pb-4">
                 <h1 className="font-medium pb-2">
-                    { FormatText(comment.body, 100) }
+                    { FormatText(comment.body, 200) }
                 </h1>
             </div>
         </Wrapper>
@@ -133,8 +135,8 @@ export default function Latest({ data }) {
             <h1 className="pb-4 text-gray-400 uppercase text-xl font-bold">
                 latest collected data from social media
             </h1>
-            <div className="bg-white  py-6 px-8">
-                <div className="grid grid-cols-5 gap-6">
+            <div className="bg-white py-6">
+                <div className="grid grid-cols-4 gap-6">
                     { 
                         data?.map((item, index) => {
                             return "provider" in item 

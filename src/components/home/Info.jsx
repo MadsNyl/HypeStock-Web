@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import correlation from "../../assets/icons/correlation.png";
 import frequency from "../../assets/icons/frequency.png";
 import score from "../../assets/icons/score.png";
@@ -17,17 +16,9 @@ export default function Info() {
             {
                 infoBoxes.map((item, index) => {
                     return <div
-                                className="relative max-w-sm w-full px-6 py-4 rounded-sm border border-gray-100 shadow-md"
+                                className="cursor-pointer max-w-sm w-full px-6 py-5 rounded-md border border-gray-200 transition duration-150 ease-in-out hover:bg-gray-100"
                                 key={index}
                             >
-                                
-                                <NavLink
-                                    to={"/about"} 
-                                    className="absolute top-2 right-2 w-6 h-6 rounded-full bg-gray-50 border border-gray-200 flex justify-center items-center font-medium transition ease-in-out duration-150 hover:bg-gray-900 hover:text-white"
-                                >
-                                    ?
-                                </NavLink>
-
                                 <div className="flex items-center space-x-6 pb-4">
                                     <img
                                         className="w-8 h-8" 

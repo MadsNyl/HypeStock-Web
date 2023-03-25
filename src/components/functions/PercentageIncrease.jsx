@@ -1,3 +1,3 @@
 export default function PercentageIncrease(from, to) {
-    return String(((to - from) / to) * 100);
+    return String(((to - from) / from) * 100);
 }

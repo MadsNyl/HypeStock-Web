@@ -40,15 +40,15 @@ export default function Stock() {
             <PageWrapper>
                 <BaseInfoWrapper>
                     {
-                        data
-                            ? <StockInfo stock={stock} data={data} days={days} /> 
+                        !isLoading && data
+                            ? <StockInfo stock={stock} data={data} days={days} setStock={setStock} setData={setData} setLoading={setLoading} setDays={setDays} /> 
                             : <></>
                     }
                 </BaseInfoWrapper>
 
                 <PageDataWrapper border={true}>
                     {
-                        data
+                        !isLoading && data
                             ? <StockStatus data={data} days={days} />
                             : <></>
                     }
@@ -56,7 +56,7 @@ export default function Stock() {
 
                 <PageDataWrapper border={true}>
                     {
-                        data
+                        !isLoading && data
                             ? <StockCorrelation data={data} />
                             : <></>
                     }
@@ -64,16 +64,16 @@ export default function Stock() {
                 
                 <PageDataWrapper border={true}>
                         {
-                            data    
-                                ? <StockArticleData data={data} ticker={stock.symbol} />
+                            !isLoading && data    
+                                ? <StockArticleData data={data} ticker={stock.symbol} days={days} />
                                 : <></>
                         }
                 </PageDataWrapper>
 
                 <PageDataWrapper>
                         {
-                            data    
-                                ? <StockRedditData data={data} ticker={stock.symbol} />
+                            !isLoading && data    
+                                ? <StockRedditData data={data} ticker={stock.symbol} days={days} />
                                 : <></>
                         }
                 </PageDataWrapper>

@@ -9,6 +9,8 @@ import Stock from "./pages/Stock";
 import Reddit from "./pages/Reddit";
 import Search from "./pages/Search";
 import Trending from "./pages/Trending";
+import StockArticles from "./pages/StockArticles";
+import StockComments from "./pages/StockComments";
 
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
             <Route path="/stats" element={<Stats />} />
             <Route path="/stock" element={<Search />} />
             <Route path="/stock/:symbol" element={<Stock />} />
+            <Route path="/stock/articles/:stock/:days/:provider" element={<StockArticles />} />
+            <Route path="/stock/comments/:stock/:days/:provider" element={<StockComments />} />
             <Route path="/trending" element={<Trending />} />
         </Routes>
       </Nav>

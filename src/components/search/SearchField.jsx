@@ -1,15 +1,18 @@
 import axios from "axios";
 import { API } from "../../shared";
 
-export default function SearchField({ setLoading, setStocks }) {
+export default function SearchField({ setLoading, setStocks, setError }) {
     const search = async (e) => {
         e.preventDefault();
         setLoading(true);
+        setError(false);
         const query = e.target[0].value.replace("&", "%26");
         e.target[0].value = "";
 
         try {
             const res = await axios.get(API + `stock/search?stock=${query}&limit=16`);
+
+            if (!res.data.stocks.length) setError(true);
 
             setStocks(res.data.stocks);
         } catch (e) {

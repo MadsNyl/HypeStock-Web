@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
+import confusion from "../../assets/icons/confusion.png";
 
-export default function Stocks({ stocks, isLoading }) {
+export default function Stocks({ stocks, isLoading, error }) {
 
     const StockLoading = () => {
         return (
@@ -35,16 +36,35 @@ export default function Stocks({ stocks, isLoading }) {
     }
 
     return (
-        <div className="grid grid-cols-4 gap-12 place-items-center mt-20">
-            {
-                isLoading 
-                    ? Array(16).fill(null).map((item, index) => {
-                        return <StockLoading key={index} />
-                    })
-                    : stocks?.map((item, index) => {
-                        return <Stock key={index} data={item} />
-                    })
+        <div>
+            { 
+                !error
+                    ? <></>
+                    : 
+                    <div className="flex justify-center mt-32">
+                        <div className="space-y-6">
+                            <img
+                                className="w-32 h-32 block ml-auto mr-auto" 
+                                src={confusion}
+                            />
+                            <h1 className="text-xl font-semibold">
+                                We couldn't find what you searched for. Try something else
+                            </h1>
+                        </div>
+                    </div>
             }
+            <div className="grid grid-cols-4 gap-12 place-items-center mt-20">
+                {
+                    isLoading 
+                        ? Array(16).fill(null).map((item, index) => {
+                            return <StockLoading key={index} />
+                        })
+                        : 
+                        stocks?.map((item, index) => {
+                            return <Stock key={index} data={item} />
+                        })
+                }
+            </div>
         </div>
     );
 }
