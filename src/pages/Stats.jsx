@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import getStatsBaseData from "../api/stats/statsBaseData";
 import { getStatsTickersByDate, getStatsTickersByFilter, getStatsTickersByMedia } from "../api/stats/StatsTickers";
+import StatsTickers from "../components/stats/StatsTickers";
+import formatNumber from "../functions/FormatNumber";
 
 
 const Stat = ({ text, data }) => {
     return (
         <div className="text-center">
-            <h1 className="text-2xl font-bold text-emerald-500 pb-2">
-                { data }
+            <h1 className="text-2xl font-bold text-emerald-500 pb-2 uppercase">
+                { formatNumber(data) }
             </h1>
             <p className="text-gray-400 capitalize text-sm">
                 { text }
@@ -17,27 +19,6 @@ const Stat = ({ text, data }) => {
     );
 }
 
-const Ticker = ({ ticker, total }) => {
-    return (
-        <NavLink 
-            to={`/stock/${ticker.symbol}`}
-            className="px-3 py-3 rounded-md border border-gray-200 bg-white flex items-center justify-between transition duration-150 ease-in-out hover:border-emerald-500"
-        >
-            <h1 className="font-medium">
-                { ticker.symbol }
-            </h1>
-
-            <div className="text-center">
-                <h1 className="text-sm text-gray-400 font-medium">
-                    { ticker.count }
-                </h1>
-                <h1 className="text-sm text-gray-400 font-medium">
-                    { (ticker.count * 100 / total).toFixed(2) } %
-                </h1>
-            </div>
-        </NavLink>
-    );
-}
 
 export default function Stats() {
 
@@ -100,9 +81,9 @@ export default function Stats() {
                             </h1>
                         </div>
                         <div className="grid grid-cols-3 gap-6">
-                            <Stat text={"tickers"} data={count?.stockCount}   />
-                            <Stat text={"articles"} data={count?.articleCount}  />
-                            <Stat text={"reddit comments"} data={count?.commentCount}  />
+                            <Stat text={"tickers"} data={count?.stockCount ? count.stockCount : 0}   />
+                            <Stat text={"articles"} data={count?.articleCount ? count.articleCount : 0}  />
+                            <Stat text={"reddit comments"} data={count?.commentCount ? count.commentCount : 0}  />
                         </div>
                     </div>
                     <div className="max-w-md w-full bg-white border border-gray-200 px-10 py-4 rounded-md">
@@ -139,38 +120,13 @@ export default function Stats() {
                         </div>
                     </div>
                 </div>
-                <div className="max-w-xl w-full">
-                    <div className="text-center border-b border-b-gray-200 pb-5 text-3xl font-bold uppercase">
-                        <h1>
-                            tickers
-                        </h1>
-                    </div>
-                    <div className="mt-6">
-                            {
-                                isLoading
-                                    ? <></>
-                                    : 
-                                    <div>
-                                        <div className="pb-6 space-y-2">
-                                            <h1 className="capitalize text-xl font-semibold">
-                                                { media } - { filter }
-                                            </h1>
-                                            <h1>
-                                                Total count: <span className="text-emerald-500 font-semibold">{ tickers?.total }</span>
-                                            </h1>
-                                        </div>
-                                        <div className="grid grid-cols-4 gap-x-4 gap-y-6">
-
-                                                {
-                                                    tickers?.tickers.map((item, index) => {
-                                                        return <Ticker key={index} ticker={item} total={tickers?.total} />
-                                                    })
-                                                }
-                                        </div>
-                                    </div>
-                            }
-                    </div>
-                </div>
+                <StatsTickers 
+                    isLoading={isLoading}
+                    media={media}
+                    filter={filter}
+                    tickers={tickers}
+                    limit={limit}
+                />
             </div>
         </>
     );
