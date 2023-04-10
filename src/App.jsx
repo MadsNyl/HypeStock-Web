@@ -11,6 +11,7 @@ import Search from "./pages/Search";
 import Trending from "./pages/Trending";
 import StockArticles from "./pages/StockArticles";
 import StockComments from "./pages/StockComments";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/stock/articles/:stock/:days/:provider" element={<StockArticles />} />
             <Route path="/stock/comments/:stock/:days/:provider" element={<StockComments />} />
             <Route path="/trending" element={<Trending />} />
+            <Route path="/profile" element={<Profile />} />
         </Routes>
       </Nav>
     </BrowserRouter>

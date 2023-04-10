@@ -41,7 +41,7 @@ const StatusCard = ({ tag, text, start, end, days}) => {
                 </p>
                 <div className="text-center">
                     <h1 className="text-3xl font-semibold text-emerald-400">
-                        { calculatePct(start, end) }%
+                        { calculatePct(end, start) }%
                     </h1>
                 </div>
             </div>
@@ -51,7 +51,7 @@ const StatusCard = ({ tag, text, start, end, days}) => {
                         { end }
                     </h1>
                     <p className="text-gray-400 text-sm">
-                        # last { days } days
+                        # these { days } days
                     </p>
                 </div>
                 <div className="text-center">

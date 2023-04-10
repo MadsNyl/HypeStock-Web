@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Footer from "./Footer";
 import outsideClick from "./functions/OutsideClick";
+import NavSearchBar from "./NavSearchBar";
 
 const SearchIcon = () => {
     return (
@@ -74,7 +75,21 @@ const Reddit = () => {
     );
 }
 
+export const FavoriteContext = createContext();
+
 export default function Nav({ children }) {
+
+    const [favorites, setFavorites] = useState();
+
+    useEffect(() => {
+        const favoritesStorage = JSON.parse(localStorage.getItem("favorites"));
+        if (favoritesStorage) {
+            if (favoritesStorage.size > 0) setFavorites({
+                storage: favoritesStorage.storage,
+                size: favoritesStorage.size
+            });
+        }
+    }, []);
 
     const navigation = [
         { name: "home", path: "/", isActive: false, collapse: false },
@@ -91,33 +106,48 @@ export default function Nav({ children }) {
     ]
 
     return (
-        <div className="bg-white font-sans overflow-x-hidden text-gray-900">
-            <header className="flex justify-between items-center px-12 py-6 max-w-8xl">
-                <NavLink
-                    // onClick={() => { setActive(!isActive); }}
-                    to={"/"}
-                    className="text-3xl font-bold text-emerald-500"
-                >
-                    HypeStock
-                </NavLink>
+        <FavoriteContext.Provider value={[favorites, setFavorites]}>
+            <div className="bg-white font-sans overflow-x-hidden text-gray-900">
+                <header className="flex justify-between items-center px-12 py-6 max-w-8xl">
+                    <div className="max-w-xs w-full">
+                        <NavLink
+                            to={"/"}
+                            className="text-3xl font-bold text-emerald-500"
+                        >
+                            HypeStock
+                        </NavLink>
+                    </div>
 
-                <nav className="flex items-center space-x-6">
-                    {
-                        navigation.map((item, index) => {
-                            return item.collapse ? <Collapse item={item} key={index} /> : <Tab item={item} key={index} /> 
-                        })
-                    }
-                </nav>
-            </header>
+                    <nav className="flex items-center space-x-6">
+                        {
+                            navigation.map((item, index) => {
+                                return item.collapse ? <Collapse item={item} key={index} /> : <Tab item={item} key={index} /> 
+                            })
+                        }
+                    </nav>
 
-            <div className="max-w-7xl mx-auto min-h-screen">
-                { children }
+                    <div className="flex items-center space-x-10">
+                        <NavSearchBar />
+                        <NavLink
+                            to={"/profile"}
+                            className="text-gray-500 transition duration-150 ease-in-out hover:text-emerald-500"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </NavLink>
+                    </div>
+                </header>
+
+                <div className="max-w-7xl mx-auto min-h-screen">
+                    { children }
+                </div>
+
+                <div className="max-w-8xl mx-auto">
+                    <Footer />
+                </div>
             </div>
-
-            <div className="max-w-8xl mx-auto">
-                <Footer />
-            </div>
-        </div>
+        </FavoriteContext.Provider>
     )
 }
 
@@ -164,7 +194,10 @@ const Collapse = ({ item }) => {
     
 
     return (
-        <div className="relative"  ref={wrapperRef}>
+        <div 
+            className="relative"  
+            ref={wrapperRef}
+        >
             <button
                 onClick={() => setOpen(!open)}
                 className="hover:text-emerald-500 capitalize font-medium flex items-center space-x-1"

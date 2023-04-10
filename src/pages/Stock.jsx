@@ -31,8 +31,7 @@ export default function Stock() {
             setData, 
             setLoading
         )
-        console.log(data)
-    }, []);
+    }, [symbol]);
 
 
     return (
