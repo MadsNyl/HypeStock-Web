@@ -1,10 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { API } from "../../shared";
 import axios from "axios";
 import SearchIcon from "../icons/Search";
 import Spinner from "../icons/Spinner";
 import PlusIcon from "../icons/Plus";
 import BoltIcon from "../icons/Bolt";
+import LineChart from "../charts/LineChart";
+import FormatDate from "../functions/FormatDate";
+import { NavLink } from "react-router-dom";
 
 
 const Result = ({ data, setTickers, tickers }) => {
@@ -61,12 +64,19 @@ const SearchBar = ({ comparisons, setComparisons, setComparisonsLoading }) => {
         setComparisonsLoading(true);
 
         try {
-            const res = await axios.get(API + ``);
+            const res = await axios.get(API + `stock/compare?stocks=${tickers.join(",")}`);
+            
+            setComparisons(res.data);
         } catch (e) {
             console.log(e);
         } finally {
             setComparisonsLoading(false);
         }
+    }
+
+    const resetTickers = () => {
+        setComparisons(undefined);
+        setTickers([]);
     }
 
     return (
@@ -158,14 +168,144 @@ const SearchBar = ({ comparisons, setComparisons, setComparisonsLoading }) => {
                 </div>
             </div>
 
-            <button 
-                onClick={compareTickers}
-                disabled={tickers.length != 2}
-                className={(tickers.length != 2 ? "opacity-60 cursor-not-allowed" : "transition duration-150 ease-in-out hover:opacity-60") + " max-w-xs w-full py-3 text-center font-semibold rounded-md bg-emerald-500 text-white"}
-            >
-                Compare
-            </button>
+            <div className="flex items-center space-x-6">
+                <button 
+                    onClick={compareTickers}
+                    disabled={tickers.length != 2 || comparisons}
+                    className={(tickers.length != 2 || comparisons ? "opacity-60 cursor-not-allowed" : "transition duration-150 ease-in-out hover:opacity-60") + " max-w-[200px] w-full py-3 text-center font-semibold rounded-md bg-emerald-500 text-white"}
+                >
+                    Compare
+                </button>
+                <button 
+                    onClick={resetTickers}
+                    disabled={!tickers.length}
+                    className={(!tickers.length ? "opacity-60 cursor-not-allowed" : "transition duration-150 ease-in-out hover:opacity-60") + " max-w-[200px] w-full py-3 text-center font-semibold rounded-md bg-red-600 text-white"}
+                >
+                    Reset
+                </button>
+            </div>
         </div>
+    );
+}
+
+const ComparisonLoading = () => {
+    return (
+        <div>
+            loading
+        </div>
+    );
+}
+
+const Comparison = ({ comparisons }) => {
+
+    const Box = ({ border, children }) => {
+        return (
+            <div className={"w-full py-12 px-4 " + (border ? "border-r border-gray-200" : "")}>
+                { children }
+            </div>
+        );
+    }
+    return (
+        <>
+            <div className="flex justify-between border-b border-gray-200">
+                {
+                    comparisons?.map((item, index) => {
+                        return <Box key={index} border={index === 0 ? true : false}>
+                                    <div>
+                                        <h1 className="text-center pb-4 text-3xl font-bold text-emerald-500">
+                                            { item.symbol }
+                                        </h1>
+                                        <p className="text-center text-gray-400 pb-6">
+                                            { item.name }
+                                        </p>
+                                        <NavLink
+                                            to={`/stock/${item.symbol}`}
+                                            className="block text-center px-4 py-2 rounded-xl bg-white shadow-md border border-gray-200 text-lg font-semibold"
+                                        >
+                                            See more
+                                        </NavLink>
+                                    </div>
+                                </Box>
+                    })
+                }
+            </div>
+            <div className="flex justify-between border-b border-gray-200">
+                {
+                    comparisons?.map((item, index) => {
+                        return <Box key={index} border={index === 0 ? true : false}>
+                                    <div className="text-center">
+                                        <h1 className="pb-4 text-3xl font-bold text-emerald-500">
+                                            { item.trackings.at(-1).last_price }$
+                                        </h1>
+                                        <p className="text-center text-gray-400 pb-6">
+                                            Closing price at { FormatDate(item.trackings.at(-1).timing) }
+                                        </p>
+                                    </div>
+                                </Box>
+                    })
+                }
+            </div>
+            <div className="flex justify-between border-b border-gray-200">
+                {
+                    comparisons?.map((item, index) => {
+                        return <Box key={index} border={index === 0 ? true : false}>
+                                    <div className="text-center">
+                                        <h1 className="pb-4 text-3xl font-bold text-emerald-500">
+                                            { item.comments.count }
+                                        </h1>
+                                        <p className="text-center text-gray-400 pb-6">
+                                            Number of mentions in Reddit
+                                        </p>
+                                    </div>
+                                </Box>
+                    })
+                }
+            </div>
+            <div className="flex justify-between border-b border-gray-200">
+                {
+                    comparisons?.map((item, index) => {
+                        return <Box key={index} border={index === 0 ? true : false}>
+                                    <div className="text-center">
+                                        <h1 className="pb-4 text-3xl font-bold text-emerald-500">
+                                            { item.articles.count }
+                                        </h1>
+                                        <p className="text-center text-gray-400 pb-6">
+                                            Number of mentions in newspaper articles
+                                        </p>
+                                    </div>
+                                </Box>
+                    })
+                }
+            </div>
+            <div className="flex justify-between border-b border-gray-200">
+                {
+                    comparisons?.map((item, index) => {
+                        return <Box key={index} border={index === 0 ? true : false}>
+                                    <div className="text-center">
+                                        <h1 className="pb-4 text-3xl font-bold text-emerald-500">
+                                            { item.comments.likes }
+                                        </h1>
+                                        <p className="text-center text-gray-400 pb-6">
+                                            Number of upvotes in Reddit
+                                        </p>
+                                    </div>
+                                </Box>
+                    })
+                }
+            </div>
+        </>
+    );  
+}
+
+const ComparisonWrapper = ({ comparisons, comparisonsLoading }) => {
+    return (
+        <>
+            {
+                comparisonsLoading
+                    ? <ComparisonLoading />
+                    : <Comparison comparisons={comparisons} />
+            }
+        </>
     );
 }
 
@@ -188,6 +328,7 @@ export default function Compare() {
                     setComparisonsLoading={setComparisonsLoading} 
                 />
             </div>
+            <ComparisonWrapper comparisons={comparisons} comparisonsLoading={comparisonsLoading} />
         </div>
     );
 }
