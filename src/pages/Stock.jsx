@@ -37,13 +37,11 @@ export default function Stock() {
     return (
         <>
             <PageWrapper>
-                <BaseInfoWrapper>
-                    {
-                        !isLoading && data
-                            ? <StockInfo stock={stock} data={data} days={days} setStock={setStock} setData={setData} setLoading={setLoading} setDays={setDays} /> 
-                            : <></>
-                    }
-                </BaseInfoWrapper>
+                {
+                    !isLoading && data
+                        ? <StockInfo stock={stock} data={data} days={days} setStock={setStock} setData={setData} setLoading={setLoading} setDays={setDays} /> 
+                        : <></>
+                }
 
                 <PageDataWrapper border={true}>
                     {

@@ -12,7 +12,7 @@ import {
 import { Line } from 'react-chartjs-2';
 
 
-export default function MultiLineChart({ text, labels, priceLabel, priceData, mentionsData, mentionsLabel }) {
+export default function MultiLineChart({ labels, priceData, mentionsData }) {
 
     ChartJS.register(
         CategoryScale,
@@ -32,10 +32,9 @@ export default function MultiLineChart({ text, labels, priceLabel, priceData, me
             },
         stacked: false,
         plugins: {
-            title: {
-                display: true,
-                text: text,
-            },
+            legend: {
+                display: false
+            }
         },
         scales: {
             y: {
@@ -59,15 +58,15 @@ export default function MultiLineChart({ text, labels, priceLabel, priceData, me
         labels,
         datasets: [
             {
-                label: priceLabel,
                 data: priceData,
+                lineTension: 0.3,
                 borderColor: "rgba(75, 192, 192, 0.2)",
                 backgroundColor: "rgba(75, 192, 192, 0.2)",
                 yAxisID: 'y',
             },
             {
-                label: mentionsLabel,
                 data: mentionsData,
+                lineTension: 0.3,
                 borderColor: "rgba(255, 159, 64, 0.2)",
                 backgroundColor: "rgba(255, 159, 64, 0.2)",
                 yAxisID: 'y1',
