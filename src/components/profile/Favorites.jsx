@@ -1,15 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { FavoriteContext } from "../Nav";
 import axios from "axios";
 import { API } from "../../shared";
 import MultiLineChart from "../charts/MultiLineChart";
 import { NavLink } from "react-router-dom";
 import ArrowTopRightBox from "../icons/ArrowTopRightBox";
 import Plus from "../icons/Plus";
+import BoxDisplayWrapper from "../wrappers/BoxDisplayWrapper";
 
 export default function Favorites() {
 
-    // const [favorites, setFavorites] = useState();
     const [tickers, setTickers] = useState();
 
     useEffect(() => {
@@ -67,7 +66,7 @@ export default function Favorites() {
 
 const Ticker = ({ ticker }) => {
     return (
-        <div className="bg-white border border-gray-200 rounded-md px-6 py-4">
+        <BoxDisplayWrapper>
             <div className="pb-8 flex justify-between">
                 <div className="flex space-x-10">
                     <div>
@@ -99,6 +98,6 @@ const Ticker = ({ ticker }) => {
                  mentionsLabel="mentions"
                 />
             </div>
-        </div>
+        </BoxDisplayWrapper>
     );
 }

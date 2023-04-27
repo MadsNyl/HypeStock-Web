@@ -1,42 +1,85 @@
 import React from "react";
 import correlation from "../../assets/icons/correlation.png";
 import frequency from "../../assets/icons/frequency.png";
-import score from "../../assets/icons/score.png";
+import insight from "../../assets/icons/insight.png";
+import { NavLink } from "react-router-dom";
 
 export default function Info() {
 
     const infoBoxes = [
-        { img: score, title: "score", description: "Is this stock discussed in a positve or negative way? " },
-        { img: frequency, title: "frequency", description: "How often is this stock discussed in a given time?" },
-        { img: correlation, title: "correlation", description: "What is the correlation between frequency, score and price change?" },
+        { 
+            img: frequency, 
+            title: "frequency", 
+            description: "How often is this stock mentioned in different social medias? We provide you with data which portray the frequency of mentions and reactions such as upvotes." 
+        },
+        { 
+            img: correlation, 
+            title: "correlation", 
+            description: "What is the correlation between frequency and price change? We provide you with statistics which give you knowledge aboute the correlation between several factors such as price, frequency and popularity." 
+        },
     ];
 
     return(
-        <div className="pt-6 pb-32 flex justify-center items-center space-x-8">
-            {
-                infoBoxes.map((item, index) => {
-                    return <div
-                                className="cursor-pointer max-w-sm w-full px-6 py-5 rounded-md border border-gray-200 transition duration-150 ease-in-out hover:bg-gray-100"
-                                key={index}
-                            >
-                                <div className="flex items-center space-x-6 pb-4">
-                                    <img
-                                        className="w-8 h-8" 
-                                        src={item.img}
-                                    />
-                                    <h1 className="font-medium text-lg capitalize text-gray-900">
-                                        {item.title}
-                                    </h1>
-                                </div>
+        <div>
+            <div className="pt-28 pb-32 flex items-stretch justify-center space-x-12">
+                {
+                    infoBoxes.map((item, index) => {
+                        return <InfoBox key={index} item={item} />
+                    })
+                }
+            </div>
+            <div className="pb-32 px-12">
+                <div className="bg-white px-20 py-10 rounded-md border border-gray-200 shadow-sm">
+                    <div className="flex justify-between items-center">
+                        <div className="max-w-md w-full">
+                            <h1 className="text-3xl font-bold pb-6">
+                                Stock Market Insights from Social Media and News
+                            </h1>
+                            <p className="leading-relaxed">
+                                <span className="text-emerald-500 font-medium text-lg">HypeStock</span> is a comprehensive source of information for investors, gathering data from social media and newspapers to provide an in-depth look at the stock market. The platform aggregates and analyzes social media posts related to specific stocks, providing data that is displayed with a user-friendly interface. Additionally, the site displays the correlation between different factors such as price, volume traded, mentions from social media and more. This allows investors to make informed decisions based on a broad range of sources, helping them stay ahead of the curve in an ever-changing market.
+                            </p>
+                        </div>
+                        <div className="mr-32 space-y-12">
+                            <img 
+                                className="w-64 h-64"
+                                src={insight}
+                            />
+                            <div className="w-full h-2 bg-gradient-to-r from-sky-300 via-emerald-500 to-sky-300 rounded-full" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="pb-32 flex justify-center">
+                <div>
+                    <NavLink
+                        to={"/stock"} 
+                        className="mt-20 lg:w-36 py-6 text-sm lg:text-xl cursor-pointer rounded-lg bg-emerald-500 text-white transition duration-150 ease-in-out hover:opacity-75 px-44 font-medium"
+                    >
+                        Start exploring
+                    </NavLink>
+                </div>
+            </div>
+        </div>
+    );
+}
 
-                                <div>
-                                    <p>
-                                        {item.description}
-                                    </p>
-                                </div>
-                            </div>
-                })
-            }
+const InfoBox = ({ item }) => {
+    return(
+        <div className="rounded-md shadow-sm border bg-white border-gray-200 px-8 py-4 relative max-w-md w-full">
+            <div className="absolute -top-16 shadow-md left-1/2 transform -translate-x-1/2  bg-white w-32 h-32 border border-emerald-300 rounded-full flex items-center justify-center">
+                <img 
+                    className="w-12 h-12"
+                    src={item.img}
+                />
+            </div>
+            <div className="pt-10">
+                <h1 className="capitalize font-medium pb-2 text-lg">
+                    { item.title }
+                </h1>
+                <p className="text-gray-500">
+                    { item.description }
+                </p>
+            </div>
         </div>
     );
 }

@@ -6,7 +6,7 @@ export default function StockCorrelation({ data }) {
         <div>
             <div className="pb-12">
                 <h1 className="text-2xl uppercase font-bold">
-                    Correaltion
+                    Correlation
                 </h1>
             </div>     
             <div className="grid grid-cols-3 gap-y-16 gap-x-12">

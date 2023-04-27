@@ -1,9 +1,10 @@
 import React from "react";
 import { pearsonCorrelation } from "../../functions/Correlation";
+import BoxDisplayWrapper from "../wrappers/BoxDisplayWrapper";
 
 export default function PearsonCorrelationInfo({ x, y, text, tag }) {
     return (
-        <div className="px-8 py-4 rounded-md bg-white border border-gray-200">
+        <BoxDisplayWrapper>
             <div className="space-x-3">
                 <div className="px-2 py-1 rounded-md bg-emerald-100 inline-block mb-4">
                     <h1 className="capitalize text-emerald-500 text-sm font-medium">
@@ -29,6 +30,6 @@ export default function PearsonCorrelationInfo({ x, y, text, tag }) {
                     </p>
                 </div>
             </div>
-        </div>
+        </BoxDisplayWrapper>
     );
 }

@@ -36,16 +36,13 @@ export default function BarChart({ labels, reddit, article }) {
 
     const data = {
         labels,
-        datasets: [
-          {
-            data: reddit,
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-          },
-          {
-            data: article,
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          },
-        ],
+        datasets: [{
+          data: [reddit, article],
+          backgroundColor: [
+            "rgba(255, 159, 64, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+          ]
+        }],
       };
 
     return <Bar options={options} data={data} />;

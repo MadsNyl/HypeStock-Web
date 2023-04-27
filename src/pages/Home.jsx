@@ -7,21 +7,13 @@ import Welcome from "../components/home/Welcome";
 
 
 export default function Home() {
-
-    const [loading, setLoading] = useState();
-    const [data, setData] = useState();
-    const [limit, setLimit] = useState(2);
-    const [latest, setLatest] = useState();
-
-    useEffect(() => {
-        getHomeBaseData(setLoading, setData, limit, setLatest);
-    }, []);
-
     return(
         <>
-            <Welcome count={data?.stock_count} />
+            <Welcome />
             <Info />
-            <Latest data={latest} />
+            
+
+            {/* <Latest data={latest} /> */}
         </>
     );
 }

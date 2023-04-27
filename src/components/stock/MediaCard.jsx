@@ -1,14 +1,10 @@
 import { NavLink } from "react-router-dom"
+import BoxDisplayWrapper from "../wrappers/BoxDisplayWrapper"
 
 export default function MediaCard ({ symbol, provider, totalCount, stockCount, path, days }) {
     return(
-        <div className="px-8 py-4 rounded-md bg-white border border-gray-200">
+        <BoxDisplayWrapper>
             <div className="space-x-3 pb-4">
-                {/* <div className="px-2 py-1 rounded-md bg-emerald-100 inline-block mb-4">
-                    <h1 className="capitalize text-emerald-500 text-sm font-medium">
-                        { symbol }
-                    </h1>
-                </div> */}
                 <div className="px-2 py-1 rounded-md bg-yellow-100 inline-block mb-2">
                     <h1 className="capitalize text-yellow-500 text-sm font-medium">
                         { provider }
@@ -47,6 +43,6 @@ export default function MediaCard ({ symbol, provider, totalCount, stockCount, p
                     </p>
                 </div>
             </div>
-        </div>
+        </BoxDisplayWrapper>
     );
 }

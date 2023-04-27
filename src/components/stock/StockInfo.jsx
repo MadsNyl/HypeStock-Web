@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import getStockBasedata from "../../api/stock/StockBaseData";
 import MultiLineChart from "../charts/MultiLineChart";
 import FavoriteIcon from "../icons/Favorite";
@@ -8,19 +8,58 @@ import MegaphoneIcon from "../icons/Megaphone";
 import BarChart from "../charts/BarChart";
 
 
+const Overview = ({ title, text }) => {
+    return (
+        <div className="max-w-sm w-full">
+            <h1 className="text-2xl font-semibold pb-2">
+                { title }
+            </h1>
+            <p className="text-gray-400">
+                { text }
+            </p>
+        </div>
+    );
+}
+
+const ChartInfo = ({ title, color }) => {
+    return (
+        <div className="flex items-center space-x-2">
+            <div style={{background: color }} className="w-12 h-1 rounded-lg" />
+            <h1 className="text-lg font-semibold">
+                { title }
+            </h1>
+        </div>
+    );
+}
+
 export default function StockInfo({ stock, data, days, setStock, setData, setLoading, setDays }) {
     const [isFavorite, setIsFavorite] = useState(false);
 
+    useEffect(() => {
+        const storage = localStorage.getItem("favorites");
+
+        if (!storage) localStorage.setItem("favorites", JSON.stringify({ storage: [], size: 0 }));
+        
+        else {
+            const favorites = JSON.parse(storage).storage;
+            for (const fav of favorites) {
+                if (fav === stock?.symbol) {
+                    setIsFavorite(true);
+                    break;
+                }
+            }
+        }
+    }, []);
+
     const toggleFavorite = () => {
         const storage = JSON.parse(localStorage.getItem("favorites"));
+
         if (!isFavorite) {
             if (storage.storage.length) {
                 storage.storage.push(stock?.symbol);
                 localStorage.setItem("favorites", JSON.stringify({ storage: storage.storage, size: storage.storage.length }));
             } else {
-                const newFavorites = [];
-                newFavorites.push(stock?.symbol);
-                localStorage.setItem("favorites", JSON.stringify({ storage: newFavorites, size: newFavorites.length }));
+                localStorage.setItem("favorites", JSON.stringify({ storage: [stock?.symbol], size: 1 }));
             }
             setIsFavorite(true);
         } else {
@@ -151,31 +190,23 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
                     })
                 }
             </div>
-            <div className="flex justify-between">
-                <div className="">
+            <div className="flex justify-between space-x-4">
+                <div className="w-3/5">
                     <BoxDisplayWrapper>
                         <div className="flex justify-between px-8 pt-2 pb-8">
-                            <div className="max-w-sm w-full">
-                                <h1 className="text-2xl font-semibold pb-2">
-                                    Overview
-                                </h1>
-                                <p className="text-gray-400">
-                                    Chart overview for price and number of mentions in social media.
-                                </p>
-                            </div>
+                            <Overview 
+                                title={"Overview"}
+                                text={"Chart overview for price and total number of mentions in social media."}
+                            />
                             <div className="flex items-center space-x-8">
-                                <div className="flex items-center space-x-2">
-                                    <div style={{background: "rgba(75, 192, 192, 0.2)"}} className="w-12 h-1 rounded-lg" />
-                                    <h1 className="text-lg font-semibold">
-                                        Price
-                                    </h1>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <div style={{background: "rgba(255, 159, 64, 0.2)"}} className="w-12 h-1 rounded-lg" />
-                                    <h1 className="text-lg font-semibold">
-                                        Mentions
-                                    </h1>
-                                </div>
+                                <ChartInfo 
+                                    title={"Price"}
+                                    color={"rgba(75, 192, 192, 0.2)"}
+                                />
+                                <ChartInfo 
+                                    title={"Mentions"}
+                                    color={"rgba(255, 159, 64, 0.2)"}
+                                />
                             </div>
                         </div>
                         <MultiLineChart 
@@ -185,8 +216,24 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
                         />
                     </BoxDisplayWrapper>
                 </div>
-                <div className="">
+                <div className="w-2/5">
                     <BoxDisplayWrapper>
+                        <div className="pt-2 px-8 pb-8 space-y-8">
+                            <Overview 
+                                title={"Overview"}
+                                text={`Chart overview for total mentions in the different social medias the last ${days} days.`}
+                            />
+                            <div className="flex items-center space-x-8">
+                                <ChartInfo 
+                                    title={"Reddit"}
+                                    color={"rgba(255, 159, 64, 0.2)"}
+                                /> 
+                                <ChartInfo 
+                                    title={"Articles"}
+                                    color={"rgba(75, 192, 192, 0.2)"}
+                                />
+                            </div>
+                        </div>
                         <BarChart 
                             labels={["Reddit", "Articles"]}
                             reddit={data?.comment_count}
