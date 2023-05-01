@@ -46,7 +46,7 @@ export default function Stock() {
                 <PageDataWrapper border={true}>
                     {
                         !isLoading && data
-                            ? <StockStatus data={data} days={days} />
+                            ? <StockCorrelation data={data} />
                             : <></>
                     }
                 </PageDataWrapper>
@@ -54,7 +54,7 @@ export default function Stock() {
                 <PageDataWrapper border={true}>
                     {
                         !isLoading && data
-                            ? <StockCorrelation data={data} />
+                            ? <StockStatus data={data} days={days} />
                             : <></>
                     }
                 </PageDataWrapper>
