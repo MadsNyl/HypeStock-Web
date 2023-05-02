@@ -17,7 +17,8 @@ export default async function getStockBasedata(symbol, days, setStock, setData, 
             comment_count: res.data.comment_info.comment_count,
             prev_comment_count: res.data.prev_comment_info.comment_count,
             comment_likes: res.data.comment_info.comment_likes,
-            prev_comment_likes: res.data.prev_comment_info.comment_likes
+            prev_comment_likes: res.data.prev_comment_info.comment_likes,
+            correlation: res.data.correlation
         }); 
     } catch (e) {
         console.log(e);

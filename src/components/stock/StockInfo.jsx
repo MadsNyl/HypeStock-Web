@@ -6,15 +6,16 @@ import BoxDisplayWrapper from "../wrappers/BoxDisplayWrapper";
 import DollarIcon from "../icons/Dollar";
 import MegaphoneIcon from "../icons/Megaphone";
 import BarChart from "../charts/BarChart";
+import Snackbar from "../Snackbar";
 
 
 const Overview = ({ title, text }) => {
     return (
         <div className="max-w-sm w-full">
-            <h1 className="text-2xl font-semibold pb-2">
+            <h1 className="text-xl md:text-2xl font-semibold pb-2">
                 { title }
             </h1>
-            <p className="text-gray-400">
+            <p className="text-xs md:text-md text-gray-400">
                 { text }
             </p>
         </div>
@@ -24,8 +25,8 @@ const Overview = ({ title, text }) => {
 const ChartInfo = ({ title, color }) => {
     return (
         <div className="flex items-center space-x-2">
-            <div style={{background: color }} className="w-12 h-1 rounded-lg" />
-            <h1 className="text-lg font-semibold">
+            <div style={{background: color }} className="w-4 md:w-12 h-1 rounded-lg" />
+            <h1 className="text-sm md:text-lg font-semibold">
                 { title }
             </h1>
         </div>
@@ -34,6 +35,7 @@ const ChartInfo = ({ title, color }) => {
 
 export default function StockInfo({ stock, data, days, setStock, setData, setLoading, setDays }) {
     const [isFavorite, setIsFavorite] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
 
     useEffect(() => {
         const storage = localStorage.getItem("favorites");
@@ -51,6 +53,12 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
         }
     }, []);
 
+    useEffect(() => {
+        setTimeout(() => {
+            setSnackbarMessage("");
+        }, 5000);
+    }, [snackbarMessage]);
+
     const toggleFavorite = () => {
         const storage = JSON.parse(localStorage.getItem("favorites"));
 
@@ -62,12 +70,15 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
                 localStorage.setItem("favorites", JSON.stringify({ storage: [stock?.symbol], size: 1 }));
             }
             setIsFavorite(true);
+            setSnackbarMessage(`${stock.symbol} added as favorite.`);
         } else {
             const newFavorites = storage.storage;
             newFavorites.splice(newFavorites.indexOf(stock?.symbol), 1);
             localStorage.setItem("favorites", JSON.stringify({ storage: newFavorites, size: newFavorites.length }));
             setIsFavorite(false);
+            setSnackbarMessage(`${stock.symbol} removed as favorite.`);
         }
+
     }
 
     const updateData = (days) => {
@@ -98,7 +109,7 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
             icon: <MegaphoneIcon style={"w-6 h-6"} />
         },
         {
-            title: `Price change last ${days} d`,
+            title: `Mentions change last ${days} d`,
             data: data?.tracking_info.mention_change_month,
             icon: <MegaphoneIcon style={"w-6 h-6"} />
         }
@@ -108,7 +119,7 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
 
         const Pct = ({ data }) => {
             return (
-                <h1 className={(data.startsWith("-") ? "text-red-500" : "text-emerald-500") + " text-2xl font-bold"}>
+                <h1 className={(data.startsWith("-") ? "text-red-500" : "text-emerald-500") + " text-lg md:text-2xl font-bold"}>
                     { data }%
                 </h1>
             );
@@ -116,11 +127,11 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
 
         return (
             <BoxDisplayWrapper>
-                <div className="flex items-stretch justify-between pb-4">
-                    <div className="p-2 rounded-md bg-emerald-200">
+                <div className="flex space-x-2 md:space-x-0 md:items-stretch md:justify-between pb-4">
+                    <div className="p-1 rounded-md bg-emerald-200">
                         { item.icon }
                     </div>
-                    <p className="text-sm font-medium">
+                    <p className="text-xs md:text-sm font-medium">
                         { item.title }
                     </p>
                 </div>
@@ -132,14 +143,21 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
     }
 
     return(
-        <div className="w-full">
-            <div className="flex justify-between">
-                <div className="w-full flex items-baseline space-x-12 pb-12">
-                    <div className="space-y-3">
-                        <h1 className="text-4xl text-emerald-500 font-extrabold uppercase pb-2">
-                            { stock.symbol } - <span className="uppercase text-3xl">{ stock.exchange }</span>
+        <div className="w-full relative">
+
+            {
+                snackbarMessage.length
+                    ? <Snackbar message={snackbarMessage} />
+                    : <></>
+            }
+
+            <div className="md:flex md:justify-between">
+                <div className="w-full flex justify-between md:justify-start items-baseline space-x-6 md:space-x-12 pb-8 md:pb-12">
+                    <div className="space-y-1 md:space-y-3">
+                        <h1 className="text-2xl md:text-4xl text-emerald-500 font-extrabold uppercase pb-2">
+                            { stock.symbol } - <span className="uppercase text-xl md:text-3xl">{ stock.exchange }</span>
                         </h1>
-                        <h1 className="text-lg font-medium text-gray-400">
+                        <h1 className="md:text-lg font-medium text-gray-400">
                             { stock.name }
                         </h1>
                     </div>
@@ -148,57 +166,57 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
                     >
                         {
                             isFavorite
-                                ? <FavoriteIcon style={"text-yellow-300 hover:text-gray-300 w-10 h-10 transition duration-150 ease-in-out"} />
-                                : <FavoriteIcon style={"text-gray-300 hover:text-yellow-300 w-10 h-10 transition duration-150 ease-in-out"} />
+                                ? <FavoriteIcon style={"text-yellow-300 hover:text-gray-300 w-8 h-8 md:w-10 md:h-10 transition duration-150 ease-in-out"} />
+                                : <FavoriteIcon style={"text-gray-300 hover:text-yellow-300 w-8 h-8 md:w-10 md:h-10 transition duration-150 ease-in-out"} />
                         }
 
                     </button>
                 </div>
 
-                <div className="flex items-center justify-center max-w-md w-full">
+                <div className="flex items-center justify-center max-w-md w-full pb-10 md:pb-0">
                     <button
                         onClick={() => updateData(7)} 
-                        className={(days == 7 ? "bg-black text-white" : "bg-gray-50 border-gray-200 transition duration-150 ease-in-out hover:bg-black hover:text-white") + " py-2 px-6 rounded-l-lg border border-gray-200 font-medium"}
+                        className={(days == 7 ? "bg-black text-white" : "bg-gray-50 border-gray-200 transition duration-150 ease-in-out hover:bg-black hover:text-white") + " py-2 px-6 text-sm md:text-md rounded-l-lg border border-gray-200 font-medium"}
                     >
                         7 d
                     </button>
                     <button
                         onClick={() => updateData(14)} 
-                        className={(days == 14 ? "bg-black text-white" : "bg-gray-50 border-gray-200 transition duration-150 ease-in-out hover:bg-black hover:text-white") + " py-2 px-6 border-t border-b border-r border-gray-200 font-medium"}
+                        className={(days == 14 ? "bg-black text-white" : "bg-gray-50 border-gray-200 transition duration-150 ease-in-out hover:bg-black hover:text-white") + " py-2 px-6 text-sm md:text-md border-t border-b border-r border-gray-200 font-medium"}
                     >
                         14 d
                     </button>
                     <button
                         onClick={() => updateData(30)} 
-                        className={(days == 30 ? "bg-black text-white" : "bg-gray-50 border-gray-200 transition duration-150 ease-in-out hover:bg-black hover:text-white") + " py-2 px-6 border-t border-b border-gray-200 font-medium"}
+                        className={(days == 30 ? "bg-black text-white" : "bg-gray-50 border-gray-200 transition duration-150 ease-in-out hover:bg-black hover:text-white") + " py-2 px-6 text-sm md:text-md border-t border-b border-gray-200 font-medium"}
                     >
                         30 d
                     </button>
                     <button
                         onClick={() => updateData(60)} 
-                        className={(days == 60 ? "bg-black text-white" : "bg-gray-50 border-gray-200 transition duration-150 ease-in-out hover:bg-black hover:text-white") + " py-2 px-6 rounded-r-lg border border-gray-200 font-medium"}
+                        className={(days == 60 ? "bg-black text-white" : "bg-gray-50 border-gray-200 transition duration-150 ease-in-out hover:bg-black hover:text-white") + " py-2 px-6 text-sm md:text-md rounded-r-lg border border-gray-200 font-medium"}
                     >
                         60 d
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-4 gap-5 pb-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 pb-6">
                 {
                     change.map((item, index) => {
                         return <Stat item={item} key={index} />
                     })
                 }
             </div>
-            <div className="flex justify-between space-x-4">
-                <div className="w-3/5">
+            <div className="md:flex md:justify-between md:space-x-4 space-y-4 md:space-y-0">
+                <div className="w-full md:w-3/5">
                     <BoxDisplayWrapper>
-                        <div className="flex justify-between px-8 pt-2 pb-8">
+                        <div className="flex justify-between px-2 md:px-8 pt-2 pb-8">
                             <Overview 
                                 title={"Overview"}
                                 text={"Chart overview for price and total number of mentions in social media."}
                             />
-                            <div className="flex items-center space-x-8">
+                            <div className="space-y-2 md:space-y-0 md:flex md:items-center md:space-x-8">
                                 <ChartInfo 
                                     title={"Price"}
                                     color={"rgba(75, 192, 192, 0.2)"}
@@ -216,9 +234,9 @@ export default function StockInfo({ stock, data, days, setStock, setData, setLoa
                         />
                     </BoxDisplayWrapper>
                 </div>
-                <div className="w-2/5">
+                <div className="w-full md:w-2/5">
                     <BoxDisplayWrapper>
-                        <div className="pt-2 px-8 pb-8 space-y-8">
+                        <div className="pt-2 px-2 md:px-8 pb-8 space-y-4 md:space-y-8">
                             <Overview 
                                 title={"Overview"}
                                 text={`Chart overview for total mentions in the different social medias the last ${days} days.`}

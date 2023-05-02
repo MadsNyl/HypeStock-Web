@@ -46,8 +46,8 @@ export default function Welcome() {
 
     return (
         <div className="bg-white rounded-br-full">
-            <div className="flex items-baseline space-x-20 pt-24 px-16 pb-20">
-                <div className="max-w-xs md:max-w-xl lg:max-w-3xl">
+            <div className="md:flex md:items-baseline md:space-x-20 pt-12 md:pt-24 px-6 md:px-16 pb-20">
+                <div className="w-full md:max-w-xl lg:max-w-3xl text-center md:text-start">
                     <h1 className="font-semibold text-3xl md:text-4xl lg:text-6xl pb-8 text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-sky-400">
                         Gain insight into social media's opinions about the stock market
                     </h1>
@@ -58,13 +58,13 @@ export default function Welcome() {
                     </div>
                     <NavLink
                         to={"/stock"} 
-                        className="w-28 lg:w-36 py-4 text-sm lg:text-lg cursor-pointer rounded-lg bg-yellow-400 text-white transition duration-150 ease-in-out hover:opacity-75 px-32 font-medium"
+                        className="py-3 md:py-4 md:text-lg cursor-pointer rounded-lg bg-yellow-400 text-white transition duration-150 ease-in-out hover:opacity-75 px-24 md:px-32 font-medium"
                     >
                         Explore
                     </NavLink>
                 </div>
 
-                <div className="grid grid-cols-3 gap-6">
+                <div className="grid grid-cols-3 gap-4 md:gap-6 mt-16 md:mt-0">
                     {
                         medias.map((item, index) => {
                             return <Media key={index} item={item} />
@@ -78,13 +78,13 @@ export default function Welcome() {
 
 const Media = ({ item }) => {
     return (
-        <div className="rounded-md shadow-md border border-gray-200 bg-white py-2 px-4">
-            <div className="flex items-center space-x-3">
+        <div className="rounded-md shadow-md border border-gray-200 bg-white py-2 px-2 md:px-4">
+            <div className="flex items-center space-x-2 md:space-x-3">
                 <img
-                    className="w-8 h-8" 
+                    className="w-6 h-6 md:w-8 md:h-8" 
                     src={item.img}
                 />
-                <h1 className="font-semibold">
+                <h1 className="text-sm md:text-medium font-semibold">
                     { item.title }
                 </h1>
             </div>

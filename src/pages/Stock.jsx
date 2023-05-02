@@ -40,7 +40,10 @@ export default function Stock() {
                 {
                     !isLoading && data
                         ? <StockInfo stock={stock} data={data} days={days} setStock={setStock} setData={setData} setLoading={setLoading} setDays={setDays} /> 
-                        : <></>
+                        : 
+                        <div className="w-full h-96 flex justify-center items-center">
+                            <Spinner size={"w-12 h-12"} />
+                        </div>
                 }
 
                 <PageDataWrapper border={true}>

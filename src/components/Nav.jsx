@@ -3,14 +3,11 @@ import { NavLink } from "react-router-dom";
 import Footer from "./Footer";
 import outsideClick from "./functions/OutsideClick";
 import NavSearchBar from "./NavSearchBar";
-
-const SearchIcon = () => {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-emerald-500">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-        </svg>
-    );
-}
+import HomeIcon from "./icons/Home";
+import SearchIcon from "./icons/Search";
+import ProfileIcon from "./icons/Profile";
+import SocialIcon from "./icons/Soical";
+import MenuIcon from "./icons/Menu";
 
 const Trending = () => {
     return (
@@ -80,7 +77,7 @@ export default function Nav({ children }) {
     const navigation = [
         { name: "home", path: "/", isActive: false, collapse: false },
         { name: "tickers", path: "", isActive: false, collapse: true, children: [
-            { name: "search", path: "/stock", collapse: false, description: "Search for a ticker or company", img: <SearchIcon/> },
+            { name: "search", path: "/stock", collapse: false, description: "Search for a ticker or company", img: <SearchIcon style={"w-6 h-6 text-emerald-500"}/> },
             { name: "trending", path: "/trending", collapse: false, description: "Get a look at the trending tickers", img: <Trending /> },
             { name: "stats", path: "/stats", collapse: false, description: "Sort tickers by stats", img: <Stats /> },
         ] },
@@ -92,8 +89,8 @@ export default function Nav({ children }) {
     ]
 
     return (
-        <div className="bg-gray-50 font-sans overflow-x-hidden text-gray-900">
-            <header className="flex bg-white shadow-sm justify-between items-center px-12 py-6 max-w-8xl">
+        <div className="bg-gray-50 font-sans overflow-x-hidden text-gray-900 relative">
+            <header className="hidden md:flex bg-white shadow-sm justify-between items-center px-12 py-6 max-w-8xl">
                 <div className="max-w-xs w-full">
                     <NavLink
                         to={"/"}
@@ -125,6 +122,22 @@ export default function Nav({ children }) {
                 </div>
             </header>
 
+            <header className="flex md:hidden bg-white shadow-sm justify-between items-center px-8 py-4 w-full">
+                <div className="max-w-xs w-full">
+                    <NavLink
+                        to={"/"}
+                        className="text-2xl font-bold text-emerald-500"
+                    >
+                        HypeStock
+                    </NavLink>
+                </div>
+                <NavLink to={"/profile"}>
+                    <ProfileIcon 
+                        style={"w-7 h-7"}
+                    />
+                </NavLink>
+            </header>
+
             <div className="max-w-8xl mx-auto min-h-screen">
                 { children }
             </div>
@@ -132,8 +145,50 @@ export default function Nav({ children }) {
             <div className="max-w-8xl mx-auto">
                 <Footer />
             </div>
+
+            <div className="fixed w-full bottom-0 flex justify-center mx-auto md:hidden">
+                <div className="w-full flex justify-between items-center border-t border-t-gray-200 shadow-md px-8 py-4 bg-white rounded-t-xl">
+                    <NavigationTab 
+                        title={"home"}
+                        path={"/"}
+                        logo={<HomeIcon style={"w-6 h-6"} />}
+                    />
+                    <NavigationTab 
+                        title={"search"}
+                        path={"/stock"}
+                        logo={<SearchIcon style={"w-6 h-6"} />}
+                    />
+                    <NavigationTab 
+                        title={"social media"}
+                        path={"/stats"}
+                        logo={<SocialIcon style={"w-6 h-6"} />}
+                    />
+                    <NavigationTab 
+                        title={"menu"}
+                        path={"/profile"}
+                        logo={<MenuIcon style={"w-6 h-6"} />}
+                    />
+                </div>
+            </div>
         </div>
     )
+}
+
+const NavigationTab = ({ title, logo, path }) => {
+    return(
+        <NavLink
+            to={path}
+        >
+            <div className="space-y-1">
+                <div className="flex justify-center">
+                    { logo }
+                </div>
+                <h1 className="uppercase text-xs text-gray-400 text-center">
+                    { title }
+                </h1>
+            </div>
+        </NavLink>
+    );
 }
 
 const Tab = ({ item }) => {

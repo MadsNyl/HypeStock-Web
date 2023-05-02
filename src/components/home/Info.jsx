@@ -21,7 +21,7 @@ export default function Info() {
 
     return(
         <div>
-            <div className="pt-28 pb-32 flex items-stretch justify-center space-x-12">
+            <div className="pt-28 pb-32 space-y-16 md:space-y-0 md:flex md:items-stretch md:justify-center md:space-x-12">
                 {
                     infoBoxes.map((item, index) => {
                         return <InfoBox key={index} item={item} />
@@ -65,18 +65,18 @@ export default function Info() {
 
 const InfoBox = ({ item }) => {
     return(
-        <div className="rounded-md shadow-sm border bg-white border-gray-200 px-8 py-4 relative max-w-md w-full">
-            <div className="absolute -top-16 shadow-md left-1/2 transform -translate-x-1/2  bg-white w-32 h-32 border border-emerald-300 rounded-full flex items-center justify-center">
+        <div className="mx-auto md:mx-0 rounded-md shadow-sm border bg-white border-gray-200 px-4 md:px-8 py-4 relative max-w-xs md:max-w-md w-full">
+            <div className="absolute -top-10 md:-top-16 shadow-md left-1/2 transform -translate-x-1/2 bg-white w-24 h-24 md:w-32 md:h-32 border border-emerald-300 rounded-full flex items-center justify-center">
                 <img 
-                    className="w-12 h-12"
+                    className="w-8 h-8 md:w-12 md:h-12"
                     src={item.img}
                 />
             </div>
             <div className="pt-10">
-                <h1 className="capitalize font-medium pb-2 text-lg">
+                <h1 className="capitalize font-medium pb-2 md:text-lg">
                     { item.title }
                 </h1>
-                <p className="text-gray-500">
+                <p className="text-sm md:text-md text-gray-500">
                     { item.description }
                 </p>
             </div>

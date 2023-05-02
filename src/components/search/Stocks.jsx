@@ -16,18 +16,18 @@ export default function Stocks({ stocks, isLoading, error }) {
         return (
             <NavLink 
                 to={`/stock/${data.symbol}`}
-                className="px-6 py-3 rounded-md bg-white border border-gray-200 max-w-md w-full transition duration-150 ease-in-out hover:border-gray-900"
+                className="px-6 py-3 rounded-md bg-white border border-gray-200 max-w-xs md:max-w-md w-full transition duration-150 ease-in-out hover:border-gray-900"
             >
                 <div className="pb-4 h-24">
-                    <h1 className="text-lg font-medium text-emerald-500 pb-2">
+                    <h1 className="text-md md:text-lg font-medium text-emerald-500 pb-2">
                         { data.symbol }
                     </h1>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs md:text-sm text-gray-500">
                         { data.name }
                     </p>
                 </div>
                 <div>
-                    <p className="capitalize">
+                    <p className="text-sm md:text-md capitalize">
                         { data.exchange }
                     </p>
                 </div>
@@ -53,7 +53,7 @@ export default function Stocks({ stocks, isLoading, error }) {
                         </div>
                     </div>
             }
-            <div className="grid grid-cols-4 gap-12 place-items-center mt-20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 place-items-center mt-20">
                 {
                     isLoading 
                         ? Array(16).fill(null).map((item, index) => {
